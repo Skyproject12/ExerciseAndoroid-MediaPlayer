@@ -67,10 +67,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (id){
             // jika button play ditekan
             case R.id.button_play:
+                // jika button play di tekan maka akan menjalankan fungsi onplay pada service
                 if(!serviceBound) return;
                 try {
 
-                    // menagkap message yang dikirim dari service berupa interface onplay
+                    // mengirim message ke service berupa interface onplay
                     serviceMessage.send(Message.obtain(null, MediaService.PLAY, 0, 0));
                 }
                 catch (RemoteException e){
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 // jika button stop ditekan
             case R.id.button_stop:
+                // jika button stop di tekan maka akan menjalankan fungsi onstop pada service
                 if (!serviceBound)return;
                 try {
 
@@ -97,7 +99,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
+        // melepaskan ikatan pada service
         unbindService(serviceConnection);
+        // mengirim action berupa destroy pada service
         boundServiceIntent.setAction(MediaService.ACTION_DESTROY);
         startService(boundServiceIntent);
         super.onDestroy();

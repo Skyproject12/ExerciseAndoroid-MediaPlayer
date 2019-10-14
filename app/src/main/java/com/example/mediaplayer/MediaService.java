@@ -79,8 +79,9 @@ public class MediaService extends Service implements MediaPlayerCallback {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what){
                 // if ststua PLAY
+                // menangkap status yang dikirim dari mainactivity
                 case PLAY:
-                    // call interface onPlay();
+                    // menangkap interface onPlay();
                     mediaPlayerCallbackWeakReference.get().onPlay();
                     break;
                 // if status STOP
@@ -107,6 +108,7 @@ public class MediaService extends Service implements MediaPlayerCallback {
 
     // start command
     @Override
+    // mengecek commad mana yang akan di jalankan service
     public int onStartCommand(Intent intent, int flags, int startId) {
         // take action
         String action= intent.getAction();
@@ -183,6 +185,7 @@ public class MediaService extends Service implements MediaPlayerCallback {
                 .build();
 
         createChannel(CHANNEL_DEFAULD_IMPORTANT);
+        // menjalankan sebuah foreground service dimana aplikasi akan berjalan pada foreground yang bergandengan dengan service
         startForeground(ONGOING_NOTIFICATION_ID, notification);
     }
 
@@ -198,6 +201,7 @@ public class MediaService extends Service implements MediaPlayerCallback {
     }
 
     void stopNotif(){
+        // mematikan notif pada bagian foregrount atau yang sedang di jalankan di layar
         stopForeground(false);
     }
 }
